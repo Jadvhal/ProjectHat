@@ -1,12 +1,7 @@
 import { client } from "@/lib/api";
-import { cacheLife, cacheTag } from "next/cache";
 import { MangaGrid } from "../manga/manga-grid";
 
 async function getRecommendedManga(id: string) {
-    "use cache";
-    cacheLife("days");
-    cacheTag(`manga-recommended-${id}`);
-
     const { data, error } = await client.GET("/v2/manga/{id}/recommendations", {
         params: {
             path: {

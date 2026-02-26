@@ -23,7 +23,6 @@ import { MangaPageProps } from "@/app/(default)/manga/[id]/page";
 import { client, serverHeaders } from "@/lib/api";
 import AniImage from "@/public/img/icons/AniList-logo.webp";
 import MalImage from "@/public/img/icons/MAL-logo.webp";
-import { cacheLife, cacheTag } from "next/cache";
 import { Suspense } from "react";
 
 const getStatusVariant = (status: string): BadgeVariantProps["variant"] => {
@@ -101,10 +100,6 @@ function ExternalLinks({
 }
 
 export async function getManga(id: string) {
-    "use cache";
-    cacheLife("days");
-    cacheTag("manga", `manga-${id}`);
-
     const { data, error } = await client.GET("/v2/manga/{id}", {
         params: {
             path: {
@@ -278,9 +273,8 @@ export async function MangaDetailsComponent({ params }: MangaPageProps) {
                                         Views:
                                     </div>
                                     <Badge
-                                        className={`${
-                                            getViewsColor(manga.views).bg
-                                        } ${getViewsColor(manga.views).text}`}
+                                        className={`${getViewsColor(manga.views).bg
+                                            } ${getViewsColor(manga.views).text}`}
                                     >
                                         {manga.views}
                                     </Badge>

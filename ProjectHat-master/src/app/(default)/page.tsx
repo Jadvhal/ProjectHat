@@ -10,7 +10,6 @@ import { client, serverHeaders } from "@/lib/api";
 import { getAuthToken } from "@/lib/auth/server";
 import { createMetadata } from "@/lib/utils";
 import { Metadata } from "next";
-import { cacheLife } from "next/cache";
 import { Suspense } from "react";
 
 export const metadata: Metadata = createMetadata({
@@ -65,9 +64,6 @@ export default async function Home() {
 }
 
 async function getViewedManga(token: string) {
-    "use cache";
-    cacheLife("minutes");
-
     const { data, error } = await client.GET("/v2/manga/viewed", {
         params: {
             query: {

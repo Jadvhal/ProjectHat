@@ -3,7 +3,6 @@ import pkg from "../../package.json";
 import { Separator } from "./ui/separator";
 
 export default async function Footer() {
-    "use cache";
 
     const version = pkg.version;
     return (

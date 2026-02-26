@@ -15,7 +15,6 @@ import {
     TrendingDown,
     TrendingUp,
 } from "lucide-react";
-import { cacheLife, cacheTag } from "next/cache";
 import { Badge, BadgeVariantProps } from "../ui/badge";
 
 interface UserStatProps {
@@ -41,10 +40,6 @@ function UserStat({ icon, label, value }: UserStatProps) {
 }
 
 async function getUserData(userId: string) {
-    "use cache";
-    cacheLife("default");
-    cacheTag("user-profiles", `user-${userId}`);
-
     const { data, error } = await client.GET("/v2/user/{userId}", {
         params: {
             path: {

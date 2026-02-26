@@ -2,7 +2,6 @@ import { LatestPageClient } from "@/components/pages/latest-client";
 import { client, serverHeaders } from "@/lib/api";
 import { createMetadata } from "@/lib/utils";
 import { Metadata } from "next";
-import { cacheLife, cacheTag } from "next/cache";
 
 interface PageProps {
     params: Promise<{ page?: string }>;
@@ -16,10 +15,6 @@ export const metadata: Metadata = createMetadata({
 });
 
 export const getLatestData = async (currentPage: number) => {
-    "use cache";
-    cacheLife("minutes");
-    cacheTag("latest");
-
     const { data, error } = await client.GET("/v2/manga/list", {
         params: {
             query: {

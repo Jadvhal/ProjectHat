@@ -8,14 +8,9 @@ import {
 } from "@/lib/api/pre-render";
 import { createMetadata, createOgImage } from "@/lib/utils";
 import { Metadata } from "next";
-import { cacheLife, cacheTag } from "next/cache";
 import { Suspense } from "react";
 
 const getChapter = async (id: string, subId: number) => {
-    "use cache";
-    cacheLife("hours");
-    cacheTag("manga-chapter", `manga-chapter-${id}-${subId}`);
-
     const { data, error } = await client.GET("/v2/manga/{id}/{subId}", {
         params: {
             path: {

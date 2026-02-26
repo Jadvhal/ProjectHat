@@ -1,12 +1,7 @@
 import { client, serverHeaders } from "@/lib/api";
-import { cacheLife, cacheTag } from "next/cache";
 import { ChaptersSection } from "./chapters-client";
 
 export async function getMangaChapters(id: string) {
-    "use cache";
-    cacheLife("quarterHour");
-    cacheTag("manga-chapters", `manga-chapters-${id}`);
-
     const { data, error } = await client.GET("/v2/manga/{id}/chapters", {
         params: {
             path: {

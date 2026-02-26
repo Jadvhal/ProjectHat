@@ -6,7 +6,6 @@ import { PopularPageClient } from "@/components/pages/popular-client";
 import { client, serverHeaders } from "@/lib/api";
 import { createMetadata } from "@/lib/utils";
 import { Metadata } from "next";
-import { cacheLife, cacheTag } from "next/cache";
 import { Suspense } from "react";
 
 interface PageProps {
@@ -36,10 +35,6 @@ const CACHE_TIMES: Record<
 };
 
 export const getPopularData = async (page: number, days: number = 30) => {
-    "use cache";
-    cacheLife(CACHE_TIMES[days.toString()]);
-    cacheTag("popular");
-
     const { data, error } = await client.GET("/v2/manga/list/popular", {
         params: {
             query: {
