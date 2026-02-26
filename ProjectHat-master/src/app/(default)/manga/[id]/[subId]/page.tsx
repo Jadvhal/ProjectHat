@@ -42,7 +42,7 @@ export async function generateStaticParams() {
 
     const mangaIds = await getAllChapterIds(limit);
     if (!mangaIds || mangaIds.length === 0) {
-        return [];
+        return [{ id: "placeholder", subId: "1" }];
     }
 
     if (STATIC_GENERATION_DISABLED) {
