@@ -1,0 +1,31 @@
+name: Next.js Build
+
+on:
+    pull_request:
+        branches:
+            - master
+            - dev
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20"
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Build Next.js project
+              run: npm run build
+              env:
+                  NEXT_PUBLIC_API_URL: "https://api.akarimanga.dpdns.org"
+                  NEXT_PUBLIC_HOST: "akarimanga.dpdns.org"
+                  DISABLE_STATIC_GENERATION: "1"
