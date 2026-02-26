@@ -25,6 +25,10 @@ export async function generateStaticParams() {
     }
 
     const mangaIds = await getAllMangaIds(limit);
+    if (!mangaIds || mangaIds.length === 0) {
+        return [];
+    }
+
     if (STATIC_GENERATION_DISABLED) {
         return [{ id: mangaIds[0] }];
     }
