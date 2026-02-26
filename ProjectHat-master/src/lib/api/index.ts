@@ -1,7 +1,5 @@
-import { inPreview } from "@/config";
 import type { paths } from "@/types/api";
 import createClient from "openapi-fetch";
-import pkg from "../../../package.json";
 
 const apiUrl =
     process.env.NEXT_PRIVATE_API_URL ||
@@ -76,7 +74,8 @@ export const client = createClient<paths>({
 
 export const serverHeaders = {
     "X-API-Key": process.env.API_KEY || "",
-    "user-agent": `AkariWebsite/${pkg.version}/${
-        inPreview ? "preview" : "production"
-    }`,
+    "user-agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    Accept: "application/json, text/plain, */*",
+    "Accept-Language": "en-US,en;q=0.9",
 };

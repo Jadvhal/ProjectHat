@@ -16,7 +16,6 @@ const config: NextConfig = {
         qualities: [20, 40, 60, 80, 100],
     },
     reactCompiler: true,
-    cacheComponents: true,
     cacheLife: {
         quarterHour: {
             stale: 5 * 60, // 5 minutes

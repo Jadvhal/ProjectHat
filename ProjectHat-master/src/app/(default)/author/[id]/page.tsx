@@ -22,7 +22,7 @@ export async function generateStaticParams() {
 
     const authorIds = await getAllAuthors(limit);
     if (!authorIds || authorIds.length === 0) {
-        return [{ id: "placeholder" }];
+        return [];
     }
 
     if (STATIC_GENERATION_DISABLED) {
