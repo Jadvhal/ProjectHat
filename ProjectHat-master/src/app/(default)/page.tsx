@@ -1,11 +1,10 @@
 import { GRID_CLASS } from "@/components/grid-page";
+import { HomeLatestClient } from "@/components/home/home-latest-client";
+import { HomePopularClient } from "@/components/home/home-popular-client";
 import { InstallPrompt } from "@/components/home/install-prompt";
 import { NotificationPrompt } from "@/components/home/notification-prompt";
-import { PopularManga } from "@/components/home/popular-manga";
 import { MangaCard } from "@/components/manga/manga-card";
 import MangaCardSkeleton from "@/components/manga/manga-card-skeleton";
-import { MangaGrid } from "@/components/manga/manga-grid";
-import { ServerPagination } from "@/components/ui/pagination/server-pagination";
 import { PromptStack } from "@/components/ui/prompt-stack";
 import { client, serverHeaders } from "@/lib/api";
 import { getAuthToken } from "@/lib/auth/server";
@@ -13,8 +12,6 @@ import { createMetadata } from "@/lib/utils";
 import { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import { Suspense } from "react";
-import { getLatestData } from "./latest/page";
-import { getPopularData } from "./popular/page";
 
 export const metadata: Metadata = createMetadata({
     title: "MangaHat - The Land of Manga and Manhwa",
@@ -29,7 +26,7 @@ export default async function Home() {
             <div className="flex-1 px-4 pt-2 pb-4">
                 <div>
                     <h2 className="text-3xl font-bold mb-2">Popular Manga</h2>
-                    <HomePopular />
+                    <HomePopularClient />
                 </div>
 
                 <Suspense
@@ -57,7 +54,7 @@ export default async function Home() {
                 </Suspense>
 
                 <h2 className="text-3xl font-bold mb-2">Latest Releases</h2>
-                <HomeLatest />
+                <HomeLatestClient />
             </div>
             <PromptStack>
                 <InstallPrompt />
@@ -67,35 +64,6 @@ export default async function Home() {
     );
 }
 
-async function HomePopular() {
-    const { data, error } = await getPopularData(1, 7);
-
-    if (error || !data) {
-        return null;
-    }
-
-    return <PopularManga manga={data.data.items} />;
-}
-
-async function HomeLatest() {
-    const { data, error } = await getLatestData(1);
-
-    if (error || !data) {
-        return null;
-    }
-
-    return (
-        <>
-            <MangaGrid mangaList={data.data.items} />
-            <ServerPagination
-                currentPage={1}
-                href="./latest"
-                totalPages={data.data.totalPages}
-                className="mt-4"
-            />
-        </>
-    );
-}
 async function getViewedManga(token: string) {
     "use cache";
     cacheLife("minutes");

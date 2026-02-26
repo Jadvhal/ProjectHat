@@ -1,11 +1,8 @@
-import ErrorPage from "@/components/error-page";
-import { GridBodySkeleton } from "@/components/grid-page";
 import {
     GridSortSelect,
     GridSortSelectFallback,
 } from "@/components/grid/grid-sort";
-import { MangaGrid } from "@/components/manga/manga-grid";
-import { ServerPagination } from "@/components/ui/pagination/server-pagination";
+import { PopularPageClient } from "@/components/pages/popular-client";
 import { client, serverHeaders } from "@/lib/api";
 import { createMetadata } from "@/lib/utils";
 import { Metadata } from "next";
@@ -30,12 +27,12 @@ const CACHE_TIMES: Record<
     string,
     { stale: number; revalidate: number; expire: number }
 > = {
-    "1": { stale: 60, revalidate: 60, expire: 120 }, // 1 minute
-    "7": { stale: 600, revalidate: 1800, expire: 3600 }, // 10 minutes stale, 30 minutes revalidate, 1 hour expire
-    "30": { stale: 1800, revalidate: 3600, expire: 7200 }, // 30 minutes stale, 1 hour revalidate, 2 hours expire
-    "90": { stale: 3600, revalidate: 7200, expire: 14400 }, // 1 hour stale, 2 hours revalidate, 4 hours expire
-    "180": { stale: 7200, revalidate: 14400, expire: 28800 }, // 2 hours stale, 4 hours revalidate, 8 hours expire
-    "365": { stale: 14400, revalidate: 86400, expire: 604800 }, // 4 hours stale, 1 day revalidate, 1 week expire
+    "1": { stale: 60, revalidate: 60, expire: 120 },
+    "7": { stale: 600, revalidate: 1800, expire: 3600 },
+    "30": { stale: 1800, revalidate: 3600, expire: 7200 },
+    "90": { stale: 3600, revalidate: 7200, expire: 14400 },
+    "180": { stale: 7200, revalidate: 14400, expire: 28800 },
+    "365": { stale: 14400, revalidate: 86400, expire: 604800 },
 };
 
 export const getPopularData = async (page: number, days: number = 30) => {
@@ -58,66 +55,19 @@ export const getPopularData = async (page: number, days: number = 30) => {
 };
 
 export default async function Popular(props: PageProps) {
+    const { page } = await props.params;
+    const { days } = await props.searchParams;
+
     return (
         <div className="flex-1 px-4 pt-2 pb-4">
             <div className="flex gap-4">
                 <h2 className="text-3xl font-bold mb-2">Popular</h2>
-                <div className="ml-auto">
-                    <Suspense fallback={<GridSortSelectFallback />}>
-                        <PopularSorting {...props} />
-                    </Suspense>
-                </div>
             </div>
 
-            <Suspense fallback={<GridBodySkeleton />}>
-                <PopularBody {...props} />
-            </Suspense>
-        </div>
-    );
-}
-
-async function PopularSorting(props: PageProps) {
-    const { days } = await props.searchParams;
-    const sorting = {
-        currentSort: { key: "days", value: days || "30" },
-        defaultSortValue: "30",
-        sortItems: [
-            { key: "days", value: "1", label: "Last 24 Hours" },
-            { key: "separator" } as const,
-            { key: "days", value: "7", label: "Last 7 Days" },
-            { key: "days", value: "30", label: "Last 30 Days" },
-            { key: "separator" } as const,
-            { key: "days", value: "90", label: "Last 3 Months" },
-            { key: "days", value: "180", label: "Last 6 Months" },
-            { key: "separator" } as const,
-            { key: "days", value: "365", label: "Last Year" },
-        ],
-    };
-
-    return <GridSortSelect sorting={sorting} />;
-}
-
-async function PopularBody(props: PageProps) {
-    const { page } = await props.params;
-    const { days } = await props.searchParams;
-    const { data, error } = await getPopularData(
-        Number(page) || 1,
-        Number(days) || 30,
-    );
-
-    if (error || !data) {
-        return <ErrorPage error={error} />;
-    }
-
-    return (
-        <>
-            <MangaGrid mangaList={data.data.items} />
-            <ServerPagination
-                currentPage={data.data.currentPage}
-                totalPages={data.data.totalPages}
-                className="mt-4"
-                href="/popular"
+            <PopularPageClient
+                initialPage={Number(page) || 1}
+                initialDays={Number(days) || 30}
             />
-        </>
+        </div>
     );
 }

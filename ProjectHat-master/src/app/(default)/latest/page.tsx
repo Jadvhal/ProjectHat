@@ -1,6 +1,4 @@
-import ErrorPage from "@/components/error-page";
-import { MangaGrid } from "@/components/manga/manga-grid";
-import { ServerPagination } from "@/components/ui/pagination/server-pagination";
+import { LatestPageClient } from "@/components/pages/latest-client";
 import { client, serverHeaders } from "@/lib/api";
 import { createMetadata } from "@/lib/utils";
 import { Metadata } from "next";
@@ -36,34 +34,15 @@ export const getLatestData = async (currentPage: number) => {
 };
 
 export default async function Latest(props: PageProps) {
+    const { page } = await props.params;
+
     return (
         <div className="flex-1 px-4 pt-2 pb-4">
             <div className="flex gap-4">
                 <h2 className="text-3xl font-bold mb-2">Latest Releases</h2>
             </div>
 
-            <LatestBody {...props} />
+            <LatestPageClient initialPage={Number(page) || 1} />
         </div>
-    );
-}
-
-async function LatestBody(props: PageProps) {
-    const { page } = await props.params;
-    const { data, error } = await getLatestData(Number(page) || 1);
-
-    if (error || !data) {
-        return <ErrorPage error={error} />;
-    }
-
-    return (
-        <>
-            <MangaGrid mangaList={data.data.items} />
-            <ServerPagination
-                currentPage={data.data.currentPage}
-                totalPages={data.data.totalPages}
-                className="mt-4"
-                href="/latest"
-            />
-        </>
     );
 }

@@ -5,7 +5,7 @@ import Page, {
 } from "../page";
 
 interface PageProps {
-    params: Promise<{ id: string, page: string }>;
+    params: Promise<{ id: string; page: string }>;
     searchParams: Promise<{
         sort?: string;
     }>;
