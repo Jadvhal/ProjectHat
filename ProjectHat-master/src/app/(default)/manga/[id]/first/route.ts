@@ -1,6 +1,19 @@
-import { getMangaChapters } from "@/components/manga-details/chapters";
+import { client, serverHeaders } from "@/lib/api";
 import { permanentRedirect, redirect } from "next/navigation";
 import { type NextRequest } from "next/server";
+
+async function getMangaChapters(id: string) {
+    const { data, error } = await client.GET("/v2/manga/{id}/chapters", {
+        params: {
+            path: {
+                id,
+            },
+        },
+        headers: serverHeaders,
+    });
+
+    return { data, error };
+}
 
 export async function GET(request: NextRequest) {
     const url = new URL(request.url);

@@ -1,14 +1,10 @@
-import { Suspense } from "react";
-import { GridBodySkeleton } from "../grid-page";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { ChaptersSectionServer } from "./chapters";
-import { MangaRecommendations } from "./recommended";
+"use client";
 
-export function MangaDetailsBody({
-    params,
-}: {
-    params: Promise<{ id: string }>;
-}) {
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { ChaptersSectionClient } from "./chapters";
+import { MangaRecommendationsClient } from "./recommended";
+
+export function MangaDetailsBody({ id }: { id: string }) {
     return (
         <Tabs defaultValue="chapters" className="w-full">
             <TabsList className="bg-background p-0 gap-2">
@@ -27,13 +23,11 @@ export function MangaDetailsBody({
             </TabsList>
 
             <TabsContent value="chapters">
-                <ChaptersSectionServer params={params} />
+                <ChaptersSectionClient id={id} />
             </TabsContent>
 
             <TabsContent value="recommendations" className="mb-2">
-                <Suspense fallback={<GridBodySkeleton pageSize={12} />}>
-                    <MangaRecommendations params={params} />
-                </Suspense>
+                <MangaRecommendationsClient id={id} />
             </TabsContent>
         </Tabs>
     );

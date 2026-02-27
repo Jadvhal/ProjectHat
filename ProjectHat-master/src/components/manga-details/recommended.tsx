@@ -1,32 +1,47 @@
-import { client } from "@/lib/api";
+"use client";
+
+import { publicClient } from "@/lib/api";
+import { GRID_CLASS } from "../grid-page";
+import MangaCardSkeleton from "../manga/manga-card-skeleton";
+import { useQuery } from "@tanstack/react-query";
 import { MangaGrid } from "../manga/manga-grid";
 
-async function getRecommendedManga(id: string) {
-    const { data, error } = await client.GET("/v2/manga/{id}/recommendations", {
-        params: {
-            path: {
-                id,
-            },
-            query: {
-                limit: 12,
-            },
+export function MangaRecommendationsClient({ id }: { id: string }) {
+    const { data, isLoading, error } = useQuery({
+        queryKey: ["manga-recommendations", id],
+        queryFn: async () => {
+            const { data, error } = await publicClient.GET(
+                "/v2/manga/{id}/recommendations",
+                {
+                    params: {
+                        path: { id },
+                        query: { limit: 12 },
+                    },
+                },
+            );
+
+            if (error || !data) {
+                throw new Error("Failed to fetch recommendations");
+            }
+
+            return data.data;
         },
+        staleTime: 5 * 60 * 1000,
     });
 
-    return { data, error };
-}
+    if (isLoading) {
+        return (
+            <div className={GRID_CLASS}>
+                {Array.from({ length: 12 }).map((_, i) => (
+                    <MangaCardSkeleton key={i} />
+                ))}
+            </div>
+        );
+    }
 
-export async function MangaRecommendations({
-    params,
-}: {
-    params: Promise<{ id: string }>;
-}) {
-    const { id } = await params;
-    const { data, error } = await getRecommendedManga(id);
-
-    if (error || !data || data.data.length === 0) {
+    if (error || !data || data.length === 0) {
         return <div className="text-center py-8">No recommendations found</div>;
     }
 
-    return <MangaGrid mangaList={data.data} />;
+    return <MangaGrid mangaList={data} />;
 }
