@@ -48,9 +48,9 @@ export function JumpToPagePopover({
         <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
             <PopoverTrigger asChild>
                 <Button
-                    variant="default"
+                    variant="outline"
                     size="sm"
-                    className="min-w-9 h-9"
+                    className="min-w-9 h-9 bg-white text-black border-white hover:bg-white/90 hover:text-black dark:bg-white dark:text-black dark:border-white dark:hover:bg-white/90"
                     aria-label={`Current page ${currentPage}, click to jump to page`}
                     aria-current="page"
                 >
