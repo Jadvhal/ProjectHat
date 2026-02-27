@@ -1,4 +1,5 @@
 import "@/app/globals.css";
+import { Analytics } from "@vercel/analytics/react";
 import { AnalyticsWrapper } from "@/components/analytics/analytics-wrapper";
 import { BaseLayout } from "@/components/base-layout";
 import Footer from "@/components/footer";
@@ -110,6 +111,7 @@ export default async function RootLayout({
                                                         visibleToasts={5}
                                                     />
                                                     <Footer />
+                                                    <Analytics />
                                                 </BaseLayout>
                                             </BorderColorProvider>
                                         </BreadcrumbProvider>

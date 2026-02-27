@@ -1,0 +1,85 @@
+Ôû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+- Experiments (use with caution):
+  Ô£ô inlineCss
+
+  Creating an optimized production build ...
+Ô£ô Compiled successfully in 37.7s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/41) ...
+ÔÜá metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ÔÜá metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+  Generating static pages using 11 workers (10/41) 
+  Generating static pages using 11 workers (20/41) 
+  Generating static pages using 11 workers (30/41) 
+Ô£ô Generating static pages using 11 workers (41/41) in 3.9s
+  Finalizing page optimization ...
+
+Route (app)
+Ôöî Ôùï /
+Ôö£ Ôùï /_not-found
+Ôö£ Ôùï /about
+Ôö£ Ôùï /account
+Ôö£ Ôùï /account/setup
+Ôö£ ãÆ /ani/[id]
+Ôö£ ãÆ /api/v1/revalidate
+Ôö£ Ôùï /apple-icon.png
+Ôö£ Ôùï /auth/callback
+Ôö£ ãÆ /auth/confirm
+Ôö£ ãÆ /auth/error
+Ôö£ Ôùï /auth/forgot-password
+Ôö£ Ôùï /auth/login
+Ôö£ ãÆ /auth/oauth
+Ôö£ Ôùï /auth/sign-up
+Ôö£ Ôùï /auth/sign-up-success
+Ôö£ Ôùï /auth/update-password
+Ôö£ ÔùÅ /author/[id]
+Ôöé Ôöö /author/Unknown
+Ôö£ ÔùÅ /author/[id]/[page]
+Ôöé Ôöö /author/Unknown/2
+Ôö£ ãÆ /bookmarks
+Ôö£ ãÆ /bookmarks/[page]
+Ôö£ Ôùï /dev/toast
+Ôö£ ÔùÅ /genre/[id]
+Ôöé Ôöö /genre/Action
+Ôö£ ÔùÅ /genre/[id]/[page]
+Ôöé Ôöö /genre/Action/2
+Ôö£ Ôùï /icon.png
+Ôö£ Ôùï /latest
+Ôö£ ÔùÅ /latest/[page]
+Ôöé Ôöö /latest/2
+Ôö£ ãÆ /lists/[id]
+Ôö£ ãÆ /mal/[id]
+Ôö£ Ôùï /manga
+Ôö£ ÔùÅ /manga/[id]
+Ôöé Ôöö /manga/737e7c9c-abac-4977-9c56-0a4ff26b295e
+Ôö£ ÔùÅ /manga/[id]/[subId]
+Ôöé Ôöö /manga/00c5051f-bf31-489d-8f29-8878dd20eda3/1
+Ôö£ ãÆ /manga/[id]/[subId]/comments
+Ôö£ ãÆ /manga/[id]/first
+Ôö£ Ôùï /manifest.json
+Ôö£ ãÆ /popular
+Ôö£ ãÆ /popular/[page]
+Ôö£ Ôùï /privacy
+Ôö£ Ôùï /robots.txt
+Ôö£ Ôùï /search
+Ôö£ Ôùï /settings
+Ôö£ Ôùï /sitemap.xml
+Ôö£ Ôùï /sync/ani
+Ôö£ Ôùï /sync/mal
+Ôö£ Ôùï /terms
+Ôöö ãÆ /user/[id]
+
+
+ãÆ Proxy (Middleware)
+
+Ôùï  (Static)   prerendered as static content
+ÔùÅ  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ãÆ  (Dynamic)  server-rendered on demand
+
+npm notice
+npm notice New major version of npm available! 10.7.0 -> 11.11.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.11.0
+npm notice To update run: npm install -g npm@11.11.0
+npm notice
