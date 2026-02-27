@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Card } from "@/components/ui/card";
 import { cn, formatRelativeDate } from "@/lib/utils";
-import { handleImageError } from "@/lib/image-fallback";
+import { createImageErrorHandler } from "@/lib/image-fallback";
 import Image from "next/image";
 import Link from "next/link";
 import { ChaptersPopup } from "./chapters-popup";
@@ -36,7 +36,7 @@ export function BookmarkCard({ bookmark }: BookmarkCardProps) {
                                 className="w-full h-auto object-cover rounded-sm"
                                 quality={40}
                                 sizes="120px"
-                                onError={handleImageError}
+                                onError={createImageErrorHandler(bookmark.aniId, bookmark.malId)}
                             />
                         </Link>
                     </div>

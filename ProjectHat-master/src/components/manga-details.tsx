@@ -143,6 +143,8 @@ export async function MangaDetailsComponent({ params }: MangaPageProps) {
                         preload={true}
                         fetchPriority="high"
                         quality={60}
+                        aniId={manga.aniId}
+                        malId={manga.malId}
                         sizes={generateSizes({
                             sm: "128px",
                             lg: "400px",

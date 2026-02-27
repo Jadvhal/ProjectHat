@@ -7,7 +7,7 @@ import Spinner from "@/components/ui/puff-loader";
 import { getSearchResults } from "@/lib/api/search";
 import { useSetting, useShortcutSetting } from "@/lib/settings";
 import { cn, generateSizes } from "@/lib/utils";
-import { handleImageError } from "@/lib/image-fallback";
+import { createImageErrorHandler } from "@/lib/image-fallback";
 import { useDebouncedValue } from "@tanstack/react-pacer";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -133,8 +133,8 @@ export default function SearchBar() {
                                             shouldCloseRef.current = false;
                                         }}
                                         className={`block p-2 hover:bg-accent flex items-center rounded-lg ${index === focusedIndex
-                                                ? "bg-accent"
-                                                : ""
+                                            ? "bg-accent"
+                                            : ""
                                             }`}
                                         prefetch={true}
                                     >
@@ -145,7 +145,7 @@ export default function SearchBar() {
                                             height={144}
                                             width={96}
                                             quality={40}
-                                            onError={handleImageError}
+                                            onError={createImageErrorHandler(result.aniId, result.malId)}
                                             sizes={generateSizes({
                                                 default: "96px",
                                             })}

@@ -11,7 +11,7 @@ import { publicClient } from "@/lib/api";
 import { generateSizes, pluralize } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { InfoIcon } from "lucide-react";
-import { handleImageError } from "@/lib/image-fallback";
+import { createImageErrorHandler } from "@/lib/image-fallback";
 import Image from "next/image";
 import Link from "next/link";
 import { BreadcrumbSetter } from "../breadcrumb-setter";
@@ -179,6 +179,8 @@ export function MangaDetailsClient({ id }: { id: string }) {
                         preload={true}
                         fetchPriority="high"
                         quality={60}
+                        aniId={manga.aniId}
+                        malId={manga.malId}
                         sizes={generateSizes({
                             sm: "128px",
                             lg: "400px",
@@ -199,7 +201,7 @@ export function MangaDetailsClient({ id }: { id: string }) {
                             preload={true}
                             fetchPriority="high"
                             quality={60}
-                            onError={handleImageError}
+                            onError={createImageErrorHandler(manga.aniId, manga.malId)}
                             sizes={generateSizes({
                                 sm: "128px",
                                 lg: "400px",

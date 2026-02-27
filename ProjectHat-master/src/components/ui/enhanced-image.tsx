@@ -8,7 +8,7 @@ import React, {
     useEffect,
 } from "react";
 import Image, { ImageProps } from "next/image";
-import { handleImageError } from "@/lib/image-fallback";
+import { createImageErrorHandler } from "@/lib/image-fallback";
 import { useSetting } from "@/lib/settings";
 
 type HoverEffect =
@@ -27,6 +27,8 @@ type HoverEffect =
 interface EnhancedImageProps extends Omit<ImageProps, "className"> {
     hoverEffect: HoverEffect;
     className?: string;
+    aniId?: number | null;
+    malId?: number | null;
 }
 
 interface EffectConfig {
@@ -149,6 +151,8 @@ export default function EnhancedImage({
     hoverEffect,
     alt,
     className = "",
+    aniId,
+    malId,
     ...props
 }: EnhancedImageProps): JSX.Element {
     const [isHovered, setIsHovered] = useState(false);
@@ -216,7 +220,7 @@ export default function EnhancedImage({
             onMouseMove={handleMouseMove}
             style={containerStyle}
         >
-            <Image className={imageClassName} alt={alt} onError={handleImageError} {...props} />
+            <Image className={imageClassName} alt={alt} onError={createImageErrorHandler(aniId, malId)} {...props} />
             {hoverEffect === "glitch" && fancyAnimationsEnabled && (
                 <style jsx global>{`
                     @keyframes glitch {

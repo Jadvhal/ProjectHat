@@ -7,7 +7,7 @@ import Spinner from "@/components/ui/puff-loader";
 import { client } from "@/lib/api";
 import Toast from "@/lib/toast-wrapper";
 import { generateSizes } from "@/lib/utils";
-import { handleImageError } from "@/lib/image-fallback";
+import { createImageErrorHandler } from "@/lib/image-fallback";
 import { useDebouncedValue } from "@tanstack/react-pacer";
 import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
@@ -165,10 +165,10 @@ export default function BookmarksHeader() {
                                     href={`/manga/${result.mangaId}`}
                                     key={result.mangaId}
                                     className={`block p-2 ${index === selectedIndex
-                                            ? "bg-accent"
-                                            : isHoveringSearchButton
-                                                ? ""
-                                                : "hover:bg-accent"
+                                        ? "bg-accent"
+                                        : isHoveringSearchButton
+                                            ? ""
+                                            : "hover:bg-accent"
                                         } flex items-center rounded-lg`}
                                 >
                                     <div className="flex items-center justify-between w-full">
@@ -180,7 +180,7 @@ export default function BookmarksHeader() {
                                                 height={72}
                                                 className="w-12 h-18 rounded mr-2"
                                                 quality={40}
-                                                onError={handleImageError}
+                                                onError={createImageErrorHandler(result.aniId, result.malId)}
                                                 sizes={generateSizes({
                                                     default: "48px",
                                                 })}

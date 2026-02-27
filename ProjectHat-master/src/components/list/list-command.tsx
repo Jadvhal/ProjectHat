@@ -14,7 +14,7 @@ import { client } from "@/lib/api";
 import { getSearchResults } from "@/lib/api/search";
 import Toast from "@/lib/toast-wrapper";
 import { generateSizes } from "@/lib/utils";
-import { handleImageError } from "@/lib/image-fallback";
+import { createImageErrorHandler } from "@/lib/image-fallback";
 import { useDebouncedValue } from "@tanstack/react-pacer";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
@@ -129,7 +129,7 @@ export function ListCommand({ listId, disabled }: ListCommandProps) {
                                                 height={72}
                                                 width={48}
                                                 quality={40}
-                                                onError={handleImageError}
+                                                onError={createImageErrorHandler(result.aniId, result.malId)}
                                                 sizes={generateSizes({
                                                     default: "48px",
                                                 })}

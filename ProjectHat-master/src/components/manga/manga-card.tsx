@@ -1,7 +1,7 @@
 "use client";
 
 import { useIsMobile } from "@/hooks/use-mobile";
-import { handleImageError } from "@/lib/image-fallback";
+import { createImageErrorHandler } from "@/lib/image-fallback";
 import { cn, generateSizes } from "@/lib/utils";
 import { useThrottledCallback } from "@tanstack/react-pacer";
 import Image from "next/image";
@@ -173,7 +173,7 @@ export function MangaCard({
                         fetchPriority={priority ? "high" : "auto"}
                         preload={priority}
                         decoding="async"
-                        onError={handleImageError}
+                        onError={createImageErrorHandler(manga.aniId, manga.malId)}
                         sizes={generateSizes({
                             sm: "50vw",
                             md: "33vw",

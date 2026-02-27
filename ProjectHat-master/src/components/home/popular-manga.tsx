@@ -1,6 +1,6 @@
 "use client";
 
-import { handleImageError } from "@/lib/image-fallback";
+import { createImageErrorHandler } from "@/lib/image-fallback";
 import { cn, generateSizes } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
@@ -237,7 +237,7 @@ function PopularMangaCard({ manga, priority }: PopularMangaCardProps) {
                 fetchPriority={priority ? "high" : "auto"}
                 preload={priority}
                 decoding="async"
-                onError={handleImageError}
+                onError={createImageErrorHandler(manga.aniId, manga.malId)}
                 sizes={generateSizes({
                     default: "240px",
                 })}
