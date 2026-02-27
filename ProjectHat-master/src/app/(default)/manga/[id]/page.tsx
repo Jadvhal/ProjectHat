@@ -1,14 +1,13 @@
 import { getManga } from "@/components/manga-details";
 import { MangaDetailsClient } from "@/components/manga-details/manga-details-client";
 import { MangaDetailsBody } from "@/components/manga-details/body";
-import { MangaComments } from "@/components/manga-details/manga-comments";
+import { MangaCommentsClient } from "@/components/manga-details/manga-comments-client";
 import {
     getAllMangaIds,
     STATIC_GENERATION_DISABLED,
 } from "@/lib/api/pre-render";
 import { createMetadata, createOgImage } from "@/lib/utils";
 import { Metadata } from "next";
-import { Suspense } from "react";
 
 export interface MangaPageProps {
     params: Promise<{ id: string }>;
@@ -69,10 +68,7 @@ export default async function MangaPage(props: MangaPageProps) {
         <div className="mx-auto p-4">
             <MangaDetailsClient id={id} />
             <MangaDetailsBody id={id} />
-
-            <Suspense fallback={null}>
-                <MangaComments params={props.params} target="manga" />
-            </Suspense>
+            <MangaCommentsClient mangaId={id} target="manga" />
         </div>
     );
 }

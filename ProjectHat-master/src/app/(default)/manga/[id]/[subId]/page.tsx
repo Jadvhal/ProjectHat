@@ -1,6 +1,5 @@
-import ErrorPage from "@/components/error-page";
-import { MangaComments } from "@/components/manga-details/manga-comments";
-import { Reader } from "@/components/manga-reader";
+import { ReaderClient } from "@/components/manga-reader-client";
+import { MangaCommentsClient } from "@/components/manga-details/manga-comments-client";
 import { client, serverHeaders } from "@/lib/api";
 import {
     getAllChapterIds,
@@ -8,7 +7,6 @@ import {
 } from "@/lib/api/pre-render";
 import { createMetadata, createOgImage } from "@/lib/utils";
 import { Metadata } from "next";
-import { Suspense } from "react";
 
 const getChapter = async (id: string, subId: number) => {
     const { data, error } = await client.GET("/v2/manga/{id}/{subId}", {
@@ -86,28 +84,17 @@ export async function generateMetadata({
 }
 
 export default async function MangaReaderPage({ params }: MangaReaderProps) {
+    const mangaParams = await params;
+
     return (
         <div className="bg-background text-foreground">
-            <MangaReaderBody params={params} />
+            <ReaderClient mangaId={mangaParams.id} subId={mangaParams.subId} />
             <div className="p-4">
-                <Suspense fallback={null}>
-                    <MangaComments params={params} target="chapter" />
-                </Suspense>
+                <MangaCommentsClient
+                    mangaId={mangaParams.id}
+                    target="chapter"
+                />
             </div>
         </div>
     );
-}
-
-async function MangaReaderBody({ params }: MangaReaderProps) {
-    const mangaParams = await params;
-    const { data, error } = await getChapter(
-        mangaParams.id,
-        Number(mangaParams.subId),
-    );
-
-    if (error) {
-        return <ErrorPage error={error} />;
-    }
-
-    return <Reader chapter={data} />;
 }

@@ -9,7 +9,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { CommentSorting } from "../comments/sorting";
 import { Button } from "../ui/button";
-import { CommentTarget } from "./manga-comments";
+import { CommentTarget } from "./manga-comments-client";
 
 interface MangaCommentListProps {
     initialComments: components["schemas"]["CommentWithRepliesResponse"][];
