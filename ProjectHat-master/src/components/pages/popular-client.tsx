@@ -8,7 +8,6 @@ import { MangaGrid } from "@/components/manga/manga-grid";
 import ClientPagination from "@/components/ui/pagination/client-pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import ErrorPage from "@/components/error-page";
 
 interface PopularPageClientProps {
     initialPage?: number;
@@ -59,7 +58,7 @@ export function PopularPageClient({
     }
 
     if (error || !data) {
-        return <ErrorPage error={error} />;
+        return <div className="text-center py-8 text-muted-foreground">Failed to load popular manga. Please try again later.</div>;
     }
 
     return (

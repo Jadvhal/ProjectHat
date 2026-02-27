@@ -8,7 +8,6 @@ import { MangaGrid } from "@/components/manga/manga-grid";
 import ClientPagination from "@/components/ui/pagination/client-pagination";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import ErrorPage from "@/components/error-page";
 
 interface GenrePageClientProps {
     genreId: string;
@@ -57,7 +56,7 @@ export function GenrePageClient({
     }
 
     if (error || !data) {
-        return <ErrorPage error={error} />;
+        return <div className="text-center py-8 text-muted-foreground">Failed to load genre manga. Please try again later.</div>;
     }
 
     return (

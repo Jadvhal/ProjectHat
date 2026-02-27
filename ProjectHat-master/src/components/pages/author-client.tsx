@@ -8,7 +8,6 @@ import { MangaGrid } from "@/components/manga/manga-grid";
 import ClientPagination from "@/components/ui/pagination/client-pagination";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import ErrorPage from "@/components/error-page";
 
 interface AuthorPageClientProps {
     authorId: string;
@@ -58,7 +57,7 @@ export function AuthorPageClient({
     }
 
     if (error || !data) {
-        return <ErrorPage error={error} />;
+        return <div className="text-center py-8 text-muted-foreground">Failed to load author manga. Please try again later.</div>;
     }
 
     return (
