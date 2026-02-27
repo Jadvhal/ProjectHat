@@ -1,16 +1,12 @@
 import { GRID_CLASS } from "@/components/grid-page";
 import { HomeLatestClient } from "@/components/home/home-latest-client";
 import { HomePopularClient } from "@/components/home/home-popular-client";
+import { HomeRecentClient } from "@/components/home/home-recent-client";
 import { InstallPrompt } from "@/components/home/install-prompt";
 import { NotificationPrompt } from "@/components/home/notification-prompt";
-import { MangaCard } from "@/components/manga/manga-card";
-import MangaCardSkeleton from "@/components/manga/manga-card-skeleton";
 import { PromptStack } from "@/components/ui/prompt-stack";
-import { client, serverHeaders } from "@/lib/api";
-import { getAuthToken } from "@/lib/auth/server";
 import { createMetadata } from "@/lib/utils";
 import { Metadata } from "next";
-import { Suspense } from "react";
 
 export const metadata: Metadata = createMetadata({
     title: "MangaHat - The Land of Manga and Manhwa",
@@ -28,29 +24,7 @@ export default async function Home() {
                     <HomePopularClient />
                 </div>
 
-                <Suspense
-                    fallback={
-                        <>
-                            <h2 className="text-3xl font-bold mb-2">
-                                Recently Viewed
-                            </h2>
-                            <div className={GRID_CLASS}>
-                                {[...Array(8)].map((_, index) => (
-                                    <MangaCardSkeleton
-                                        key={`recent-skeleton-${index}`}
-                                        className={
-                                            index > 5
-                                                ? "block sm:hidden lg:block 2xl:hidden"
-                                                : ""
-                                        }
-                                    />
-                                ))}
-                            </div>
-                        </>
-                    }
-                >
-                    <HomeRecent />
-                </Suspense>
+                <HomeRecentClient />
 
                 <h2 className="text-3xl font-bold mb-2">Latest Releases</h2>
                 <HomeLatestClient />
@@ -59,57 +33,6 @@ export default async function Home() {
                 <InstallPrompt />
                 <NotificationPrompt />
             </PromptStack>
-        </>
-    );
-}
-
-async function getViewedManga(token: string) {
-    const { data, error } = await client.GET("/v2/manga/viewed", {
-        params: {
-            query: {
-                limit: 8,
-            },
-        },
-        headers: {
-            ...serverHeaders,
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
-    if (error) {
-        return { data: null, error };
-    }
-
-    return { data, error: null };
-}
-
-async function HomeRecent() {
-    const token = await getAuthToken();
-    if (!token) {
-        return null;
-    }
-
-    const { data, error } = await getViewedManga(token);
-    if (error || !data || data.data.length === 0) {
-        return null;
-    }
-
-    return (
-        <>
-            <h2 className="text-3xl font-bold mb-2">Recently Viewed</h2>
-            <div className={GRID_CLASS}>
-                {data.data.map((manga, index) => (
-                    <MangaCard
-                        key={manga.id}
-                        manga={manga}
-                        className={
-                            index > 5
-                                ? "block sm:hidden lg:block 2xl:hidden"
-                                : ""
-                        }
-                    />
-                ))}
-            </div>
         </>
     );
 }

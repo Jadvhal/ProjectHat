@@ -1,12 +1,6 @@
-import {
-    GridSortSelect,
-    GridSortSelectFallback,
-} from "@/components/grid/grid-sort";
 import { PopularPageClient } from "@/components/pages/popular-client";
-import { client, serverHeaders } from "@/lib/api";
 import { createMetadata } from "@/lib/utils";
 import { Metadata } from "next";
-import { Suspense } from "react";
 
 interface PageProps {
     params: Promise<{ page?: string }>;
@@ -21,33 +15,6 @@ export const metadata: Metadata = createMetadata({
     image: "/og/popular.webp",
     canonicalPath: "/popular",
 });
-
-const CACHE_TIMES: Record<
-    string,
-    { stale: number; revalidate: number; expire: number }
-> = {
-    "1": { stale: 60, revalidate: 60, expire: 120 },
-    "7": { stale: 600, revalidate: 1800, expire: 3600 },
-    "30": { stale: 1800, revalidate: 3600, expire: 7200 },
-    "90": { stale: 3600, revalidate: 7200, expire: 14400 },
-    "180": { stale: 7200, revalidate: 14400, expire: 28800 },
-    "365": { stale: 14400, revalidate: 86400, expire: 604800 },
-};
-
-export const getPopularData = async (page: number, days: number = 30) => {
-    const { data, error } = await client.GET("/v2/manga/list/popular", {
-        params: {
-            query: {
-                page: page,
-                pageSize: 24,
-                days: days,
-            },
-        },
-        headers: serverHeaders,
-    });
-
-    return { data, error };
-};
 
 export default async function Popular(props: PageProps) {
     const { page } = await props.params;

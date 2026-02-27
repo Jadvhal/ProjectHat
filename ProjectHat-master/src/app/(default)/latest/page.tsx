@@ -1,5 +1,4 @@
 import { LatestPageClient } from "@/components/pages/latest-client";
-import { client, serverHeaders } from "@/lib/api";
 import { createMetadata } from "@/lib/utils";
 import { Metadata } from "next";
 
@@ -13,20 +12,6 @@ export const metadata: Metadata = createMetadata({
     image: "/og/akari.webp",
     canonicalPath: "/latest",
 });
-
-export const getLatestData = async (currentPage: number) => {
-    const { data, error } = await client.GET("/v2/manga/list", {
-        params: {
-            query: {
-                page: currentPage,
-                pageSize: 24,
-            },
-        },
-        headers: serverHeaders,
-    });
-
-    return { data, error };
-};
 
 export default async function Latest(props: PageProps) {
     const { page } = await props.params;
