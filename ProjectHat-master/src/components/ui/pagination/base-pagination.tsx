@@ -106,34 +106,34 @@ export function BasePagination({
             <div className="flex items-center justify-center gap-1 flex-1">
                 {visiblePages.map((page, index) => {
                     const isCurrentPage = page === currentPage;
-
-                    if (isCurrentPage) {
-                        return (
-                            <JumpToPagePopover
-                                key={page}
-                                currentPage={currentPage}
-                                totalPages={totalPages}
-                                handlePageChange={handlePageChange}
-                                jumpToPage={jumpToPage}
-                                setJumpToPage={setJumpToPage}
-                                isPopoverOpen={isPopoverOpen}
-                                setIsPopoverOpen={setIsPopoverOpen}
-                            />
-                        );
-                    }
+                    const prevPage = visiblePages[index - 1];
+                    const showEllipsis = index > 0 && page - prevPage > 1;
 
                     return (
-                        <span key={page}>
-                            {renderButton(
-                                page,
-                                page,
-                                false,
-                                `Go to page ${page}`,
-                                cn("min-w-9 h-9", {
-                                    "inline-flex":
-                                        index === 1 ||
-                                        index === visiblePages.length - 2,
-                                }),
+                        <span key={page} className="flex items-center gap-1">
+                            {showEllipsis && (
+                                <span className="flex items-center justify-center min-w-6 h-9 text-muted-foreground text-sm">
+                                    ...
+                                </span>
+                            )}
+                            {isCurrentPage ? (
+                                <JumpToPagePopover
+                                    currentPage={currentPage}
+                                    totalPages={totalPages}
+                                    handlePageChange={handlePageChange}
+                                    jumpToPage={jumpToPage}
+                                    setJumpToPage={setJumpToPage}
+                                    isPopoverOpen={isPopoverOpen}
+                                    setIsPopoverOpen={setIsPopoverOpen}
+                                />
+                            ) : (
+                                renderButton(
+                                    page,
+                                    page,
+                                    false,
+                                    `Go to page ${page}`,
+                                    "min-w-9 h-9",
+                                )
                             )}
                         </span>
                     );
