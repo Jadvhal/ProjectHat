@@ -1,5 +1,5 @@
 import "@/app/globals.css";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 import { AnalyticsWrapper } from "@/components/analytics/analytics-wrapper";
 import { BaseLayout } from "@/components/base-layout";
 import Footer from "@/components/footer";
