@@ -8,6 +8,7 @@ import React, {
     useEffect,
 } from "react";
 import Image, { ImageProps } from "next/image";
+import { handleImageError } from "@/lib/image-fallback";
 import { useSetting } from "@/lib/settings";
 
 type HoverEffect =
@@ -215,7 +216,7 @@ export default function EnhancedImage({
             onMouseMove={handleMouseMove}
             style={containerStyle}
         >
-            <Image className={imageClassName} alt={alt} {...props} />
+            <Image className={imageClassName} alt={alt} onError={handleImageError} {...props} />
             {hoverEffect === "glitch" && fancyAnimationsEnabled && (
                 <style jsx global>{`
                     @keyframes glitch {

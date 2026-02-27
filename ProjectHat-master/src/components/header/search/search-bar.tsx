@@ -7,6 +7,7 @@ import Spinner from "@/components/ui/puff-loader";
 import { getSearchResults } from "@/lib/api/search";
 import { useSetting, useShortcutSetting } from "@/lib/settings";
 import { cn, generateSizes } from "@/lib/utils";
+import { handleImageError } from "@/lib/image-fallback";
 import { useDebouncedValue } from "@tanstack/react-pacer";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -79,9 +80,8 @@ export default function SearchBar() {
 
     return (
         <div
-            className={`relative transition-all w-auto flex-grow lg:grow-0 lg:w-96 xl:w-128 ${
-                isFocused ? "xl:w-[40rem] lg:w-128" : ""
-            }`}
+            className={`relative transition-all w-auto flex-grow lg:grow-0 lg:w-96 xl:w-128 ${isFocused ? "xl:w-[40rem] lg:w-128" : ""
+                }`}
         >
             <div className="flex gap-2 relative">
                 <Input
@@ -108,9 +108,8 @@ export default function SearchBar() {
                 />
                 <KeyboardShortcut
                     keys={useSetting("searchManga")}
-                    className={`hidden md:flex transition-opacity ${
-                        isFocused ? "opacity-0" : "opacity-100"
-                    }`}
+                    className={`hidden md:flex transition-opacity ${isFocused ? "opacity-0" : "opacity-100"
+                        }`}
                 />
             </div>
             {isFocused && (
@@ -133,11 +132,10 @@ export default function SearchBar() {
                                         onMouseDown={() => {
                                             shouldCloseRef.current = false;
                                         }}
-                                        className={`block p-2 hover:bg-accent flex items-center rounded-lg ${
-                                            index === focusedIndex
+                                        className={`block p-2 hover:bg-accent flex items-center rounded-lg ${index === focusedIndex
                                                 ? "bg-accent"
                                                 : ""
-                                        }`}
+                                            }`}
                                         prefetch={true}
                                     >
                                         <Image
@@ -147,6 +145,7 @@ export default function SearchBar() {
                                             height={144}
                                             width={96}
                                             quality={40}
+                                            onError={handleImageError}
                                             sizes={generateSizes({
                                                 default: "96px",
                                             })}
