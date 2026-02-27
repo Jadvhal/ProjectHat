@@ -1,6 +1,6 @@
 "use client";
 
-import { client } from "@/lib/api";
+import { publicClient } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { GRID_CLASS } from "@/components/grid-page";
 import MangaCardSkeleton from "@/components/manga/manga-card-skeleton";
@@ -26,7 +26,7 @@ export function PopularPageClient({
     const { data, isLoading, error } = useQuery({
         queryKey: ["popular", currentPage, days],
         queryFn: async () => {
-            const { data, error } = await client.GET(
+            const { data, error } = await publicClient.GET(
                 "/v2/manga/list/popular",
                 {
                     params: {

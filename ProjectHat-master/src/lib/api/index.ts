@@ -72,6 +72,13 @@ export const client = createClient<paths>({
     fetch: authenticatedFetch,
 });
 
+// Public client without credentials for client-side data fetching
+// This avoids CORS preflight failures on deployed environments
+// where the API doesn't whitelist the deployment domain
+export const publicClient = createClient<paths>({
+    baseUrl: apiUrl,
+});
+
 export const serverHeaders = {
     "X-API-Key": process.env.API_KEY || "",
     "user-agent":

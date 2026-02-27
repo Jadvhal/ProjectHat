@@ -1,6 +1,6 @@
 "use client";
 
-import { client } from "@/lib/api";
+import { publicClient } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { GRID_CLASS } from "@/components/grid-page";
 import MangaCardSkeleton from "@/components/manga/manga-card-skeleton";
@@ -26,7 +26,7 @@ export function AuthorPageClient({
     const { data, isLoading, error } = useQuery({
         queryKey: ["author", authorId, currentPage],
         queryFn: async () => {
-            const { data, error } = await client.GET("/v2/author/{name}", {
+            const { data, error } = await publicClient.GET("/v2/author/{name}", {
                 params: {
                     path: {
                         name: authorName,

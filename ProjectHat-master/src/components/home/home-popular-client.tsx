@@ -1,6 +1,6 @@
 "use client";
 
-import { client } from "@/lib/api";
+import { publicClient } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import { PopularManga, PopularMangaSkeleton } from "./popular-manga";
 
@@ -8,7 +8,7 @@ export function HomePopularClient() {
     const { data, isLoading } = useQuery({
         queryKey: ["popular-home"],
         queryFn: async () => {
-            const { data, error } = await client.GET(
+            const { data, error } = await publicClient.GET(
                 "/v2/manga/list/popular",
                 {
                     params: {
